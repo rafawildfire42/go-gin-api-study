@@ -1,18 +1,11 @@
 package main
 
-import "github.com/gin-gonic/gin"
-
-func ShowStudents(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"id":   "1",
-		"name": "rafael",
-	})
-}
+import (
+	"github.com/rafawildfire42/go-gin-api-study/database"
+	"github.com/rafawildfire42/go-gin-api-study/routes"
+)
 
 func main() {
-	r := gin.Default()
-
-	r.GET("/students", ShowStudents)
-
-	r.Run()
+	database.ConnectDatabase()
+	routes.HandleRequets()
 }
