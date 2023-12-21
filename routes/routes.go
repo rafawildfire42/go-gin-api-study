@@ -10,6 +10,7 @@ func HandleRequets() {
 
 	r.GET("/students", controllers.ListStudents)
 	r.GET("/students/:id", controllers.GetStudent)
+	r.GET("/students/cpf/:cpf", controllers.GetStudentByCPF)
 
 	r.POST("/students", controllers.CreateStudent)
 

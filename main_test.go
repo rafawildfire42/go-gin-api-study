@@ -43,3 +43,13 @@ func TestListStudents(t *testing.T) {
 	r.ServeHTTP(response, request)
 	assert.Equal(t, http.StatusOK, response.Code)
 }
+
+func TestGetStudentByCPF(t *testing.T) {
+	database.ConnectDatabase()
+	r := SetupTestRoutes()
+	r.GET("/students/cpf/:cpf", controllers.GetStudentByCPF)
+	request, _ := http.NewRequest("GET", "/students/cpf/typherecpf", nil)
+	response := httptest.NewRecorder()
+	r.ServeHTTP(response, request)
+	assert.Equal(t, http.StatusOK, response.Code)
+}

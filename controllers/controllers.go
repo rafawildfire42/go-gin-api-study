@@ -63,10 +63,9 @@ func GetStudent(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error": "Not found",
 		})
-	} else {
-		c.JSON(http.StatusOK, student)
+		return
 	}
-
+	c.JSON(http.StatusOK, student)
 }
 
 func DeleteStudent(c *gin.Context) {
@@ -75,7 +74,20 @@ func DeleteStudent(c *gin.Context) {
 	database.DB.Delete(&student, id)
 
 	c.JSON(http.StatusOK, student)
+}
 
+func GetStudentByCPF(c *gin.Context) {
+	var student models.Student
+	cpf := c.Params.ByName("cpf")
+	database.DB.First(&student, "cpf = ?", cpf)
+
+	if student.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "Student not found",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, student)
 }
 
 func EndpointToTest(c *gin.Context) {
