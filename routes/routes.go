@@ -17,5 +17,7 @@ func HandleRequets() {
 
 	r.DELETE("/students/:id", controllers.DeleteStudent)
 
+	r.GET("/test-me", controllers.EndpointToTest)
+
 	r.Run()
 }

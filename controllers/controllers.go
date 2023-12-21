@@ -6,12 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rafawildfire42/go-gin-api-study/database"
 	"github.com/rafawildfire42/go-gin-api-study/models"
+	"gopkg.in/validator.v2"
 )
 
 func CreateStudent(c *gin.Context) {
 	var student models.Student
 
 	if err := c.ShouldBindJSON(&student); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	if err := validator.Validate(student); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error()})
 		return
@@ -68,5 +75,13 @@ func DeleteStudent(c *gin.Context) {
 	database.DB.Delete(&student, id)
 
 	c.JSON(http.StatusOK, student)
+
+}
+
+func EndpointToTest(c *gin.Context) {
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Deu tudo certo!",
+	})
 
 }
